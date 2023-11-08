@@ -1,0 +1,42 @@
+Dead1 100.0 5
+Probe Ringdown Time [us]
+Filter 5208 6
+Filter File
+SFD 59.7 5
+H-Channel Base Frequency [MHz]
+SF 15.02 5
+X-Channel Base Frequency [MHz]
+O1D -2675.08061769 5
+H-Channel Frequency Offset [Hz]
+O1 -6714.0 5
+X-Channel Frequency Offset [Hz]
+NBlock 1 1
+Number of block to save
+NS 1 1
+Number of Scans... Should be divisible by NBlock
+P3 9.0 5
+H-Channel Decupler 90-deg. TX Pulse [us]
+P90 2.58 5
+X-Channel 90-deg. TX Pulse [us]
+PH2 0,180,90,270 6
+Acquire Phase [0,90,...]
+ReceiverAttenuation 28 1
+Receiver Attenuation [0..78dB]
+ReceiverPoints 16384 1
+Points To Acquire Per Scan
+RD 1600000 1
+Recycle Delay Between Scans
+Sequence FIDX_WALTZ4_Fast 6
+Pulse Sequence
+PH1 0,180,90,270 6
+X-Channel 90-deg. Pulse Phase [0,90,...]
+RFAD 0.4 5
+H-Channel Decoupler TX Pulse Amplitude [0.0 .. 1.0]
+RFA 0.4 5
+X-Channel TX Pulse Amplitude [0.0 .. 1.0]
+TXEnable 20.0 5
+Transmitter Enable Time [us]
+PH21 0 6
+1st Phase for WALTZ-4 [0,90,...]
+PH22 180 6
+2nd Phase for WALTZ-4 [0,90,...]
