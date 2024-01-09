@@ -1,0 +1,88 @@
+function DataBeforePhase = PhaseBeforeData( fname, bVarianOrBruker, Num )
+%  get spectra		
+%  Input 
+%         fname: fid name
+%         bVarianOrBruker: varian data is 1, bruker data is 2
+%         Num: curent data index 
+%  Output
+%         DataBeforePhase: spectra
+% 
+%  Programmer: qingjia bao, lichen
+
+
+% load fid 
+if( bVarianOrBruker == 1 )   % varian data
+  FidData=getfile(fname);
+%   fidlength=length(FidData);
+  FidData=FidData';
+  %如果是Bruker数据需要调用不同的函数，此外bruker数据必须采用循环移点操作-97.312*pi/180*5998.8/32768*w
+else                       % bruker data
+  ByteOrder = 2;
+  PointNum = 65536;
+  switch(Num)
+      case 10
+           ByteOrder = 2;
+      case 11
+           ByteOrder = 2;
+      case 12
+           ByteOrder = 1;
+      case 13
+           ByteOrder = 1;
+      case 14
+           ByteOrder = 1;
+      case 15
+           ByteOrder = 1;
+  end
+  FidData=GetFIdFromBidary(fname, PointNum, 1, ByteOrder);
+end
+
+% Apodization
+
+%  FidData=FidData(1,:);
+% % % %加窗处理
+% Sw1=12019.230;
+% nD2=length(FidData);
+% t=exp(-[0:1/Sw1:(nD2-1)/Sw1]*pi*0.1);
+% FidData=FidData.*t;
+
+% fill zero
+L = length(FidData);
+FidData = [FidData,zeros(1,32*1024 - L)];
+% FidData = FidData(1:5000);
+L = length(FidData);
+
+% shift point for bruker data
+switch(Num)
+    case 10
+         ShiftNum = 76;
+         TempFidData = FidData(1 : ShiftNum);
+         FidData = [FidData(ShiftNum + 1 : L) TempFidData];
+    case 11
+         ShiftNum = 76;
+         TempFidData = FidData(1 : ShiftNum);
+         FidData = [FidData(ShiftNum + 1 : L) TempFidData];
+    case 12
+         ShiftNum = 53;
+         TempFidData = FidData(1 : ShiftNum);
+         FidData = [FidData(ShiftNum + 1 : L) TempFidData];
+    case 13
+         ShiftNum = 53;
+         TempFidData = FidData(1 : ShiftNum);
+         FidData = [FidData(ShiftNum + 1 : L) TempFidData];
+    case 14
+         ShiftNum = 53;
+         TempFidData = FidData(1 : ShiftNum);
+         FidData = [FidData(ShiftNum + 1 : L) TempFidData];
+    case 15
+         ShiftNum = 53;
+         TempFidData = FidData(1 : ShiftNum);
+         FidData = [FidData(ShiftNum + 1 : L) TempFidData];
+end
+
+% fft
+DataBeforePhase=(fft(FidData));
+DataBeforePhase=fftshift(DataBeforePhase);
+
+display('ft over');
+
+
